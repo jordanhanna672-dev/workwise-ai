@@ -1,0 +1,18 @@
+{
+  "name": "workwise-ai-alpha",
+  "version": "0.1.0-alpha",
+  "description": "WorkWise AI - an intelligent workplace assistant that consolidates tasks from emails, messages, and calendars into one prioritized dashboard.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "start:with-ai": "node --env-file=.env server.js",
+    "test": "node --test",
+    "lint": "node scripts/lint.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}

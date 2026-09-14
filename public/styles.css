@@ -1,0 +1,118 @@
+:root {
+  --bg: #0f172a;
+  --panel: #1e293b;
+  --panel-2: #273548;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-2: #34d399;
+  --danger: #f87171;
+  --border: #334155;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar h1 { margin: 0; font-size: 1.25rem; }
+
+.badge {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #001018;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.tabs { display: flex; gap: 0.5rem; }
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: var(--panel-2);
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+main { max-width: 760px; margin: 0 auto; padding: 1.5rem; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+h2 { margin-top: 0; }
+.hint { color: var(--muted); margin-top: -0.5rem; }
+
+form { display: flex; flex-direction: column; gap: 0.75rem; }
+
+label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; color: var(--muted); }
+
+textarea, select, input[type="number"] {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+button {
+  background: var(--accent);
+  color: #001018;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+button.secondary { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+button.delete-btn { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+
+#suggestion-area { margin-top: 1.5rem; }
+
+.task-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.task-card header { display: flex; justify-content: space-between; align-items: baseline; }
+.task-title { margin: 0; font-size: 1.05rem; }
+.task-score { color: var(--accent-2); font-weight: 700; font-size: 0.9rem; }
+.task-meta { color: var(--muted); font-size: 0.85rem; margin: 0.25rem 0; }
+.task-subtasks { margin: 0.5rem 0; padding-left: 1.2rem; color: var(--text); }
+.task-reasoning summary { cursor: pointer; color: var(--accent); font-size: 0.85rem; }
+.task-reasoning ul { color: var(--muted); font-size: 0.85rem; }
+.task-actions { display: flex; align-items: center; gap: 1rem; margin-top: 0.75rem; }
+.task-actions label { flex-direction: row; align-items: center; gap: 0.5rem; }
+.task-actions input { width: 5rem; }
+
+.suggestion-card { border: 1px dashed var(--accent); }
+.confidence { font-size: 0.75rem; color: var(--muted); }

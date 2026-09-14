@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WorkWise AI — alpha</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>WorkWise&nbsp;AI <span class="badge">alpha</span></h1>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="inbox">Inbox</button>
+      <button class="tab-btn" data-tab="dashboard">Prioritized Dashboard</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="inbox" class="tab-panel active">
+      <h2>Paste a message to extract a task</h2>
+      <p class="hint">Simulates an incoming email, chat message, or calendar note. Nothing is saved until you approve it.</p>
+      <form id="ingest-form">
+        <label>
+          Source
+          <select id="ingest-source">
+            <option value="email">Email</option>
+            <option value="chat">Chat</option>
+            <option value="calendar">Calendar</option>
+          </select>
+        </label>
+        <textarea id="ingest-text" rows="6" placeholder="e.g. Hey, can you send the Q3 report and the updated slides by Friday? Also loop in Priya on the budget numbers."></textarea>
+        <button type="submit">Extract task with AI</button>
+      </form>
+
+      <div id="suggestion-area"></div>
+    </section>
+
+    <section id="dashboard" class="tab-panel">
+      <h2>Prioritized tasks</h2>
+      <p class="hint">Highest priority first. Click a task to see why it was ranked there, or override it manually.</p>
+      <div id="task-list"></div>
+    </section>
+  </main>
+
+  <template id="task-card-template">
+    <article class="task-card">
+      <header>
+        <h3 class="task-title"></h3>
+        <span class="task-score"></span>
+      </header>
+      <p class="task-meta"></p>
+      <ul class="task-subtasks"></ul>
+      <details class="task-reasoning">
+        <summary>Why is this ranked here?</summary>
+        <ul></ul>
+      </details>
+      <div class="task-actions">
+        <label>Override priority (0-100):
+          <input type="number" min="0" max="100" class="override-input" />
+        </label>
+        <button class="delete-btn">Delete</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>
