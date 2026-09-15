@@ -10,6 +10,26 @@ have real email/Slack/calendar accounts wired up.
 
 ---
 
+## Alpha Release Features
+
+- Ingest task information from email, message, or calendar-style text
+- Extract a suggested task title, dealine, and subtasks
+- Provide an explanation for the generated task suggestion
+- Require human approval for the generated task suggestion
+- Allow users to reject an AI-generated task suggestion
+- Store approved tasks for later use
+- Automatically prioritize tasks
+- Display reasoning for why tasks are prioritized
+- Allow users to mangually override task priority
+- Allow users to delete tasks
+- Provide automated unit testing
+- Provide automated linting and CI/CD validation
+- Provide a fallback extraction method when the OpenAI API is not configured
+
+The alpha focuses on demonstrating the complete workflow and integration of the core features rather than providing production-level external service integrations.
+
+---
+
 ## 1. What you need before you start
 
 - **Node.js**, version 18 or newer. That's it — no database to install, no
@@ -100,7 +120,27 @@ That's the app. To stop it later, click back in the terminal window and press
 
 ---
 
-## 5. Running the automated tests
+## 5. CI/CD and Automated Testing 
+
+The project includes a GitHub Actions CI/CD workflow located at:
+.github/workflows/ci.yml
+
+The CI workflow runs automatically when changes are pushed to the repository or when a pull request is created.
+
+**The workflow**:
+1. Checks out the repository.
+2. Sets up Node.js 20.
+3. Installs the project dependencies.
+4. Runs the lint/syntax check.
+5. Runs the automated test suite.
+6. Starts the server to verify that the application boots successfuly.
+7. Checks the main application endpoint.
+8. Checks the '/api/tasks/' endpoint.
+9. Stops the test server after the checks are complete.
+
+The same primary quality checks can be run locally with the following down below. 
+
+**Running the automated tests**:
 
 ```
 npm test
@@ -114,6 +154,8 @@ To also run the (very lightweight) style/syntax check used in CI:
 ```
 npm run lint
 ```
+
+A successful GitHub Actions run provides automated verification that the application passes its syntax checks, automated tests, and basic server/API startup checks. 
 
 ---
 
@@ -132,9 +174,70 @@ If the API call ever fails (bad key, no internet, unexpected response), the
 app automatically falls back to the built-in rules instead of crashing or
 losing your message — you'll see that noted in the "why" explanation.
 
+The API key should be kept in the '.env' file (that can be created by copying the contents on the .example.env file to another named .env and retrieving a secret key from OpenAI) and should not be committed to the GitHub repository. 
+
 ---
 
-## 7. Why no Express / React / PostgreSQL in this alpha?
+## 7. Module Integration
+
+The alpha release is organized into serperate modules that work together to provide the complere WorkWise AI workflow. 
+
+**The main integration flow is**:
+
+User input -> public/Frontend -> server.js API -> src/extractor.js -> Human Review -> src/db/js -> src/prioritize/js -> Prioritized Dashboard
+
+**The primary modules are**: 
+
+1. 'public/' provides the user interface for entering messages, reviewing auggestions, and viewing tasks.
+2. 'server.js' provides the HTTP server and API endpoints.
+3. 'src.extractor.js' processes incoming text and gfenrates tasks suggestions.
+4. 'src/db.js' stores and retrieves approved tasks.
+5. 'src/prioritize.js' calculates task priority and provides ranking explanations.
+6. 'tests/' verifies important extraction and prioritization functionality.
+
+The modules communication through the server API, creating the end-to-end workflow of message ingestions -> task extraction -> human approval -> storage -> prioritization -> dashboard display. 
+
+This modular strcuture allows the alpha to demonstrate system cohesion while keeping the major responsibilities seperated for future development. 
+
+---
+
+## 8. Security Considerations
+
+**The alpha includes several basic security protections**:
+
+- API request bodies are limited to help prevent excessively large payloads.
+- Invalid JSON requests are rejected with an error response.
+- Static file requests are checked to help prevent path traversal outside the public directory.
+- OpenAI API credentials are provided through environment variables rather than being stored directly in the source code.
+- The '.env' file is intended to remain local and should not be committed to the repository.
+
+Because this is an alpha release, production-level authentication, authorization, rate limiting, and additional input validaton remain areas for future security improvements. 
+
+---
+
+## 9. Error Handling
+
+The application includes basic error handling for critical operations. 
+
+API requests validate required input and return appropriate HTTP error responses when required data is missing, JSON is invalid, or a requested task cannot be found. Unexpected API errors are also caught and returned as internal error responses rather than allowing the server to terminate unexpectedly. 
+
+If the optional OPENAI integration fails, the Smart Task Extractor falls back to the built-in extraction rules so the application can continue operating. 
+
+This approach allows the alpha to demonstrate graceful handling of common input and service failures while maintaining the application's core workflow. 
+
+---
+
+## 10. Alpha Validation
+
+The alpha release is designed to provide a lightweight local demonstration without requiring a database server or frontend build process. 
+
+Automated tests validate important task extraction and prioritization functionality, while the CI workflow verifies that the server starts successfully and that the primary application and task API endpoints respond correctly. 
+
+The alpha prioritizes reliable demonstration of the complete workflow and low setup requirement. Performance measurements and production-level performance thresholds will be established as the project moves from the alpha prototype toward the full production architecture. 
+
+---
+
+## 11. Why no Express / React / PostgreSQL in this alpha?
 
 The team's target stack (see the pitch doc) is React + Node/Express +
 PostgreSQL + OpenAI. That's still the plan for later milestones. For the
@@ -159,7 +262,7 @@ later.
 
 ---
 
-## 8. Project structure
+## 12. Project structure
 
 ```
 workwise-ai-alpha/
@@ -182,8 +285,10 @@ workwise-ai-alpha/
 
 ---
 
-## 9. Putting this on GitHub
+## Alpha Release Summary
 
-See **GETTING_STARTED_GITHUB.md** in this same folder for step-by-step
-instructions, including how to create the `.github` folder on a Mac (Finder
-hides dot-folders, but Terminal and Git handle them just fine).
+**The WorkWise AI alpha demonstrates the complete core workflow**: 
+
+Ingest -> AI Task Extraction -> Human Review -> Approve/Reject -> Task Storage -> Prioritization -> Prioritized Dashboard
+
+The alpha provides a functional foundation for the team's planned production architecture while intentionally documenting the current limitations, technical debt, security considerations, testing approach, and future upgrade path. 
