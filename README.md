@@ -50,7 +50,7 @@ If you see something like `v20.11.0` or `v22.x.x`, you're good.
 ## 2. Opening a terminal
 
 - **Mac**: press `Cmd + Space`, type `Terminal`, press Enter.
-- **Windows**: press the Start key, type `PowerShell`, press Enter.
+- **Windows**: press the Start key, type `PowerShell`, press Enter. Ensure `PowerShell` Execution Policy has been updated to run scripts under For Developer settings.
 
 Everything below is typed into that window, one line at a time, pressing
 Enter after each line.
@@ -188,9 +188,9 @@ User input -> public/Frontend -> server.js API -> src/extractor.js -> Human Revi
 
 **The primary modules are**: 
 
-1. 'public/' provides the user interface for entering messages, reviewing auggestions, and viewing tasks.
+1. 'public/' provides the user interface for entering messages, reviewing suggestions, and viewing tasks.
 2. 'server.js' provides the HTTP server and API endpoints.
-3. 'src.extractor.js' processes incoming text and gfenrates tasks suggestions.
+3. 'src.extractor.js' processes incoming text and genrates tasks suggestions.
 4. 'src/db.js' stores and retrieves approved tasks.
 5. 'src/prioritize.js' calculates task priority and provides ranking explanations.
 6. 'tests/' verifies important extraction and prioritization functionality.
