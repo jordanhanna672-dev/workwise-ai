@@ -8,7 +8,7 @@ This document describes the API endpoints and data interfaces used by the WorkWi
 
 ### GET `/api/tasks`
 
-Returns the current approved task list.
+Returns the current task list, excluding rejected tasks.
 
 - Retrieves tasks from the data layer.
 - Excludes tasks with a rejected status.
