@@ -13,7 +13,7 @@ have real email/Slack/calendar accounts wired up.
 ## Alpha Release Features
 
 - Ingest task information from email, message, or calendar-style text
-- Extract a suggested task title, dealine, and subtasks
+- Extract a suggested task title, deadline, and subtasks
 - Provide an explanation for the generated task suggestion
 - Require human approval for the generated task suggestion
 - Allow users to reject an AI-generated task suggestion
